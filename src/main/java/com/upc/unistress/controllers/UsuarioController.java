@@ -1,41 +1,59 @@
 package com.upc.unistress.controllers;
 
-import com.upc.unistress.entidades.Psicologo;
+import com.upc.unistress.dtos.UsuarioDTO;
 import com.upc.unistress.entidades.Usuario;
 import com.upc.unistress.interfaces.IUsuarioService;
+import org.modelmapper.ModelMapper;
 import org.springdoc.core.utils.PropertyResolverUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
+
     @Autowired
     private IUsuarioService usuarioService;
 
-    @Autowired
-    private PropertyResolverUtils propertyResolverUtils;
-
-    @PostMapping("/insertarUsuario")
-    public Usuario Insertar(@RequestBody Usuario usuario) {
-        return usuarioService.insertar(usuario);
+    @GetMapping("/usuarios")
+    public List<UsuarioDTO> listar() {
+        return usuarioService.list()
+                .stream()
+                .map(u -> new ModelMapper().map(u, UsuarioDTO.class))
+                .collect(Collectors.toList());
     }
 
-    @PutMapping ("/actualizarUsuario")
-    public Usuario actualizar(@RequestBody Usuario usuario ){
-        return usuarioService.actualizar(usuario);
+    @PostMapping("/usuario")
+    public void registrar(@RequestBody UsuarioDTO dto) {
+        usuarioService.insert(dto);
     }
 
-    @DeleteMapping("/Usuario/{idUsuario}")
-    public Usuario eliminar(@PathVariable Long idUsuario){
-        return usuarioService.eliminar(idUsuario);
+    @PutMapping("/usuario")
+    public void editar(@RequestBody UsuarioDTO dto) {
+        usuarioService.insert(dto); // save también actualiza si el id existe
     }
 
-    @GetMapping("/Usuarios")
-    public List<Usuario> listarTodos(){
-        return usuarioService.listarTodos();
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable("id") Long id) {
+        usuarioService.delete(id);
+    }
+
+    @GetMapping("/{id}")
+    public UsuarioDTO listarId(@PathVariable("id") Long id) {
+        return usuarioService.listId(id);
+    }
+
+    @GetMapping("/buscar")
+    public Optional<UsuarioDTO> buscarPorCorreo(@RequestParam String correo) {
+        return usuarioService.findByCorreo(correo);
+    }
+
+    @GetMapping("/por-rol")
+    public List<UsuarioDTO> listarPorRol(@RequestParam String tipoRol) {
+        return usuarioService.listarPorRol(tipoRol);
     }
 }

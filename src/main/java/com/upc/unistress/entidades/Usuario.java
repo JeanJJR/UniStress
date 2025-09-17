@@ -6,23 +6,51 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+@Table(name = "usuario")
+public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
-    @Column(length = 100)
+    private Long id;
+
+    @Column(nullable = false, length = 50)
     private String nombre;
-    @Column(length = 100)
-    private String apellido;
-    @Column(unique = true)
+
+    @Column(nullable = false, length = 80)
+    private String apellidos;
+
+    @Column(nullable = false, unique = true, length = 80)
     private String correo;
-    @Column(unique = true)
-    private String contrasenia;
-    @Column(length = 100)
-    private String tipoUsuario;
+
+    @Column(nullable = false, length = 100)
+    private String contrasena;
+
+    @Column(length = 20)
+    private String telefono;
+
+    private LocalDate fechaRegistro;
+
+    @ManyToOne
+    @JoinColumn(name = "rol_id", nullable = false)
+    private Rol rol;
+    // Relación con Perfil (1:1)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Perfil perfil;
+
+    public Usuario(String nombre, String apellidos, String correo, String contrasena, String telefono, LocalDate fechaRegistro, Rol rol) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.telefono = telefono;
+        this.fechaRegistro = fechaRegistro;
+        this.rol = rol;
+    }
 }
