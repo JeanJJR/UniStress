@@ -8,13 +8,13 @@ import java.util.List;
 public interface IRolService {
 
     // Crear un rol
-    void insert(RolDTO rolDTO);
+    void insertar(RolDTO rolDTO);
 
     // Listar todos los roles
-    List<RolDTO> list();
+    List<RolDTO> listar();
 
     // Eliminar rol
-    void delete(Long id);
+    void eliminar(Long id);
 
     // Buscar rol por id
     RolDTO listId(Long id);

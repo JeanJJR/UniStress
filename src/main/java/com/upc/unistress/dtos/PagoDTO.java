@@ -1,0 +1,21 @@
+package com.upc.unistress.dtos;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class PagoDTO {
+    private Long id;
+    private Long suscripcionId;
+    private Long metodoPagoId;
+    private Double monto;
+    private LocalDate fechaPago;
+    private String estado;
+}

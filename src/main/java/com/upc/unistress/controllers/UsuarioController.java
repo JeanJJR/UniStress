@@ -6,6 +6,8 @@ import com.upc.unistress.interfaces.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springdoc.core.utils.PropertyResolverUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,41 +21,51 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
 
-    @GetMapping("/usuarios")
-    public List<UsuarioDTO> listar() {
-        return usuarioService.list()
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioDTO>> listar() {
+        List<UsuarioDTO> usuarios = usuarioService.list()
                 .stream()
-                .map(u -> new ModelMapper().map(u, UsuarioDTO.class))
+                .map(u -> modelMapper.map(u, UsuarioDTO.class))
                 .collect(Collectors.toList());
+        return ResponseEntity.ok(usuarios);
     }
 
-    @PostMapping("/usuario")
-    public void registrar(@RequestBody UsuarioDTO dto) {
+    @PostMapping
+    public ResponseEntity<String> registrar(@RequestBody UsuarioDTO dto) {
         usuarioService.insert(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente");
     }
 
-    @PutMapping("/usuario")
-    public void editar(@RequestBody UsuarioDTO dto) {
-        usuarioService.insert(dto); // save también actualiza si el id existe
+    @PutMapping
+    public ResponseEntity<String> editar(@RequestBody UsuarioDTO dto) {
+        usuarioService.insert(dto); // tambien se puede usar save para guardar o actualizar, pero recomentable es insert
+        return ResponseEntity.ok("Usuario actualizado correctamente");
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable("id") Long id) {
+    public ResponseEntity<String> eliminar(@PathVariable("id") Long id) {
         usuarioService.delete(id);
+        return ResponseEntity.ok("Usuario eliminado exitosamente");
     }
 
     @GetMapping("/{id}")
-    public UsuarioDTO listarId(@PathVariable("id") Long id) {
-        return usuarioService.listId(id);
+    public ResponseEntity<UsuarioDTO> listarId(@PathVariable("id") Long id) {
+        UsuarioDTO usuario = usuarioService.listId(id);
+        return ResponseEntity.ok(usuario);
     }
 
     @GetMapping("/buscar")
-    public Optional<UsuarioDTO> buscarPorCorreo(@RequestParam String correo) {
-        return usuarioService.findByCorreo(correo);
+    public ResponseEntity<Optional<UsuarioDTO>> buscarPorCorreo(@RequestParam String correo) {
+        Optional<UsuarioDTO> usuario = usuarioService.findByCorreo(correo);
+        return ResponseEntity.ok(usuario);
     }
 
     @GetMapping("/por-rol")
-    public List<UsuarioDTO> listarPorRol(@RequestParam String tipoRol) {
-        return usuarioService.listarPorRol(tipoRol);
+    public ResponseEntity<List<UsuarioDTO>> listarPorRol(@RequestParam String tipoRol) {
+        List<UsuarioDTO> usuarios = usuarioService.listarPorRol(tipoRol);
+        return ResponseEntity.ok(usuarios);
     }
 }

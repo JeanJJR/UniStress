@@ -21,13 +21,13 @@ public class RolService implements IRolService {
     private ModelMapper modelMapper;
 
     @Override
-    public void insert(RolDTO rolDTO) {
+    public void insertar(RolDTO rolDTO) {
         Rol rol = modelMapper.map(rolDTO, Rol.class);
         rolRepository.save(rol);
     }
 
     @Override
-    public List<RolDTO> list() {
+    public List<RolDTO> listar() {
         return rolRepository.findAll()
                 .stream()
                 .map(rol -> modelMapper.map(rol, RolDTO.class))
@@ -36,7 +36,7 @@ public class RolService implements IRolService {
 
 
     @Override
-    public void delete(Long id) {
+    public void eliminar(Long id) {
         if (rolRepository.existsById(id)) {
             rolRepository.deleteById(id);
         }
