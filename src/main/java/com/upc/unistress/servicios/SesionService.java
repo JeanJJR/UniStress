@@ -30,6 +30,8 @@ public class SesionService implements ISesionService {
     @Autowired
     private ModelMapper modelMapper;
 
+    
+    //Crear sesión
     @Override
     public void crearSesion(SesionDTO dto) {
         Usuario psicologo = usuarioRepository.findById(dto.getPsicologoId())
@@ -45,6 +47,7 @@ public class SesionService implements ISesionService {
         sesion.setObservaciones(dto.getObservaciones());
 
         sesionRepository.save(sesion);
+    
 
         // enviar notificacion de sesion al psicologo
         Notificacion notificacion = new Notificacion();
@@ -56,6 +59,19 @@ public class SesionService implements ISesionService {
         notificacionRepository.save(notificacion);
     }
 
+        //Editar Sesión
+    @Override
+    public Sesion editarsesion (Sesion sesion) {
+        return sesionRepository.findById(sesion.getId())
+                .map(existing ->
+                {
+                    Sesion updateSesion = modelMapper.map(sesion, Sesion.class);
+                    return sesionRepository.save(updateSesion);
+                })
+                .orElseThrow(() -> new RuntimeException("Sesion con ID" + sesion.getId() + "no encontrado"));
+    }
+
+    
     @Override
     public List<SesionDTO> listar() {
         return sesionRepository.findAll()
