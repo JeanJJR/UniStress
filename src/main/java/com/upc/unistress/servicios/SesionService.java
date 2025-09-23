@@ -30,6 +30,7 @@ public class SesionService implements ISesionService {
     @Autowired
     private ModelMapper modelMapper;
 
+    //Crear Sesion 
     @Override
     public void crearSesion(SesionDTO dto) {
         Usuario psicologo = usuarioRepository.findById(dto.getPsicologoId())
@@ -56,6 +57,7 @@ public class SesionService implements ISesionService {
         notificacionRepository.save(notificacion);
     }
 
+    //Listar sesion - Historial de sesiones
     @Override
     public List<SesionDTO> listar() {
         return sesionRepository.findAll()
@@ -68,7 +70,7 @@ public class SesionService implements ISesionService {
                 })
                 .toList();
     }
-
+    //Cancelar sesión
     @Override
     public void eliminar(Long id) {
         if (sesionRepository.existsById(id)) {
@@ -76,6 +78,7 @@ public class SesionService implements ISesionService {
         }
     }
 
+    //Filtro entre fechas 
     @Override
     public List<SesionDTO> listarPorFecha(LocalDate fecha) {
         return sesionRepository.findByFecha(fecha)
