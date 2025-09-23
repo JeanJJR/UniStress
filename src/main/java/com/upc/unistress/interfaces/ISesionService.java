@@ -16,6 +16,6 @@ public interface ISesionService {
     // Eliminar sesión
     void eliminar(Long id);
 
-    // Listar sesiones por fecha (útil para recordatorios)
-    List<SesionDTO> listarPorFecha(LocalDate fecha);
+    // Listar sesiones entre fechas
+    List<SesionDTO> listarPorFechas(LocalDate fechaInicial, LocalDate fechaFinal);
 }
