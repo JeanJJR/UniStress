@@ -9,5 +9,6 @@ import java.util.List;
 public interface SesionRepository extends JpaRepository<Sesion, Long> {
     List<Sesion> findByPsicologo_Id(Long psicologoId);
     List<Sesion> findByEstudiante_Id(Long estudianteId);
-    List<Sesion> findByFecha(LocalDate fecha);
+    List<Sesion> findByFechaBetween(LocalDate fechaInicial, LocalDate fechaFinal);
+
 }
