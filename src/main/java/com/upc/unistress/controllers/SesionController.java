@@ -28,10 +28,13 @@ public class SesionController {
         return ResponseEntity.ok(sesionService.listar());
     }
 
-    @GetMapping("/fecha/{fecha}")
-    public ResponseEntity<List<SesionDTO>> listarPorFecha(@PathVariable String fecha) {
-        LocalDate fechaBuscada = LocalDate.parse(fecha);
-        return ResponseEntity.ok(sesionService.listarPorFecha(fechaBuscada));
+    @GetMapping("/fechas")
+    public ResponseEntity<List<SesionDTO>> listarPorFechas(@RequestParam String fechaInicial, @RequestParam String fechaFinal) {
+
+        LocalDate inicio = LocalDate.parse(fechaInicial);
+        LocalDate fin = LocalDate.parse(fechaFinal);
+
+        return ResponseEntity.ok(sesionService.listarPorFechas(inicio, fin));
     }
 
     @DeleteMapping("/{id}")
