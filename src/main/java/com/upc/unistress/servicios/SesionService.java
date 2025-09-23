@@ -57,6 +57,19 @@ public class SesionService implements ISesionService {
         notificacionRepository.save(notificacion);
     }
 
+    //Editar sesión
+    public SesionDTO editar (SesionDTO sesionDTO) {
+        return sesionRepository.findById(sesionDTO.getId())
+                .map(existing->{
+                    Sesion sesionEntidad = modelMapper.map(sesionDTO, Sesion.class);
+                    Sesion guardada = sesionRepository.save(sesionEntidad);
+                    return modelMapper.map(guardada, SesionDTO.class);
+                })
+                .orElseThrow(() -> new RuntimeException("Sesion no encontrado"));
+    }
+
+
+
     //Listar sesion - Historial de sesiones
     @Override
     public List<SesionDTO> listar() {
@@ -74,14 +87,38 @@ public class SesionService implements ISesionService {
     @Override
     public void eliminar(Long id) {
         if (sesionRepository.existsById(id)) {
-            sesionRepository.deleteById(id);
+            // Obtener la sesión antes de eliminarla
+            Sesion sesion = sesionRepository.findById(id).orElse(null);
+
+            if (sesion != null) {
+                // Datos del psicólogo y estudiante asociados
+                Usuario psicologo = sesion.getPsicologo();
+                Usuario estudiante = sesion.getEstudiante();
+
+                // Eliminar la sesión
+                sesionRepository.deleteById(id);
+
+                // Crear la notificación
+                Notificacion notificacion = new Notificacion();
+                notificacion.setUsuario(psicologo); // notificar al psicólogo
+                notificacion.setMensaje("La sesión con el estudiante "
+                        + estudiante.getNombre()
+                        + " ha sido cancelada.");
+                notificacion.setTipo("CANCELACIÓN");
+                notificacion.setFechaEnvio(LocalDate.now());
+                notificacion.setEstado("PENDIENTE");
+
+                // Guardar notificación
+                notificacionRepository.save(notificacion);
+            }
         }
     }
 
+
     //Filtro entre fechas 
     @Override
-    public List<SesionDTO> listarPorFecha(LocalDate fecha) {
-        return sesionRepository.findByFecha(fecha)
+    public List<SesionDTO> listarPorFechas(LocalDate fechaInicial, LocalDate fechaFinal) {
+        return sesionRepository.findByFechaBetween(fechaInicial, fechaFinal)
                 .stream()
                 .map(s -> {
                     SesionDTO dto = modelMapper.map(s, SesionDTO.class);

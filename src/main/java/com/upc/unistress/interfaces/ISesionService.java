@@ -10,10 +10,13 @@ public interface ISesionService {
     // Crear nueva sesión (incluye crear notificación para el psicólogo)
     void crearSesion(SesionDTO dto);
 
+    //Editar sesion
+    public SesionDTO editar (SesionDTO sesionDTO);
+
     // Listar todas las sesiones
     List<SesionDTO> listar();
 
-    // Eliminar sesión
+    // Cancelar sesión
     void eliminar(Long id);
 
     // Listar sesiones entre fechas

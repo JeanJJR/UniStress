@@ -23,6 +23,11 @@ public class SesionController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Sesión creada y notificación enviada al psicólogo");
     }
 
+    @PutMapping
+    public ResponseEntity<SesionDTO> editar (@RequestBody SesionDTO sesionDTO) {
+        return ResponseEntity.ok(sesionService.editar(sesionDTO));
+    }
+
     @GetMapping
     public ResponseEntity<List<SesionDTO>> listar() {
         return ResponseEntity.ok(sesionService.listar());
