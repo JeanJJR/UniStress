@@ -80,8 +80,8 @@ public class SesionService implements ISesionService {
 
     //Filtro entre fechas 
     @Override
-    public List<SesionDTO> listarPorFecha(LocalDate fecha) {
-        return sesionRepository.findByFecha(fecha)
+    public List<SesionDTO> listarPorFechas(LocalDate fechaInicial, LocalDate fechaFinal) {
+        return sesionRepository.findByFechaBetween(fechaInicial, fechaFinal)
                 .stream()
                 .map(s -> {
                     SesionDTO dto = modelMapper.map(s, SesionDTO.class);
