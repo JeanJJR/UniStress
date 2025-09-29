@@ -42,18 +42,18 @@ public class PagoController {
     public ResponseEntity<List<PagoDTO>> listarPorSuscripcion(@PathVariable Long suscripcionId) {
         return ResponseEntity.ok(pagoService.listarPorSuscripcion(suscripcionId));
     }
-    @GetMapping("/por-usuario/{usuarioId}")
+    @GetMapping("/admi/por-usuario/{usuarioId}")
     public ResponseEntity<List<PagoDTO>> listarPorUsuario(@PathVariable Long usuarioId) {
         return ResponseEntity.ok(pagoService.listarPorUsuario(usuarioId));
     }
 
-    @GetMapping("/ultimo-mes")
+    @GetMapping("/admi/ultimo-mes")
     public ResponseEntity<List<PagoDTO>> listarPagosUltimoMes(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         return ResponseEntity.ok(pagoService.listarPagosUltimoMes(fecha));
     }
 
-    @GetMapping("/total-ultimo-mes")
+    @GetMapping("/admi/total-ultimo-mes")
     public ResponseEntity<Double> obtenerTotalRecaudadoUltimoMes(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         return ResponseEntity.ok(pagoService.obtenerTotalRecaudadoUltimoMes(fecha));
