@@ -66,4 +66,11 @@ public class UsuarioService implements IUsuarioService {
                 .map(usuario -> modelMapper.map(usuario, UsuarioDTO.class))
                 .toList();
     }
+    @Override
+    public List<UsuarioDTO> listarUsuariosConSuscripcionActiva() {
+        return usuarioRepository.findUsuariosConSuscripcionActiva()
+                .stream()
+                .map(u -> modelMapper.map(u, UsuarioDTO.class))
+                .toList();
+    }
 }

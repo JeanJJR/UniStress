@@ -1,13 +1,16 @@
 package com.upc.unistress.controllers;
 
 import com.upc.unistress.dtos.SuscripcionDTO;
+import com.upc.unistress.dtos.UsuarioDTO;
 import com.upc.unistress.interfaces.ISuscripcionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,5 +60,21 @@ public class SuscripcionController {
     public ResponseEntity<String> eliminar(@PathVariable Long id) {
         suscripcionService.eliminar(id);
         return ResponseEntity.ok("Suscripción eliminada correctamente");
+    }
+
+    @GetMapping("/Admi/por-estado")
+    public ResponseEntity<List<SuscripcionDTO>> listarPorEstado(@RequestParam String estado) {
+        return ResponseEntity.ok(suscripcionService.listarPorEstado(estado));
+    }
+
+    @GetMapping("/Admi/activas-ultimo-mes")
+    public ResponseEntity<List<SuscripcionDTO>> listarActivasUltimoMes(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        return ResponseEntity.ok(suscripcionService.listarActivasUltimoMes(fecha));
+    }
+
+    @GetMapping("/Admi/usuarios-premium-activos")
+    public ResponseEntity<List<UsuarioDTO>> listarUsuariosPremiumActivos() {
+        return ResponseEntity.ok(suscripcionService.listarUsuariosPremiumActivos());
     }
 }

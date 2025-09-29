@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -91,4 +92,35 @@ public class PagoService implements IPagoService {
                 })
                 .toList();
     }
+    @Override
+    public List<PagoDTO> listarPorUsuario(Long usuarioId) {
+        return pagoRepository.findByUsuarioId(usuarioId)
+                .stream()
+                .map(p -> {
+                    PagoDTO dto = modelMapper.map(p, PagoDTO.class);
+                    dto.setSuscripcionId(p.getSuscripcion().getId());
+                    dto.setMetodoPagoId(p.getMetodoPago().getId());
+                    return dto;
+                })
+                .toList();
+    }
+
+    @Override
+    public List<PagoDTO> listarPagosUltimoMes(LocalDate fecha) {
+        return pagoRepository.findPagosUltimoMes(fecha)
+                .stream()
+                .map(p -> {
+                    PagoDTO dto = modelMapper.map(p, PagoDTO.class);
+                    dto.setSuscripcionId(p.getSuscripcion().getId());
+                    dto.setMetodoPagoId(p.getMetodoPago().getId());
+                    return dto;
+                })
+                .toList();
+    }
+
+    @Override
+    public Double obtenerTotalRecaudadoUltimoMes(LocalDate fecha) {
+        return pagoRepository.obtenerTotalRecaudadoUltimoMes(fecha);
+    }
+
 }

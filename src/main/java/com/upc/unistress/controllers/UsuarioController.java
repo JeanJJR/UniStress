@@ -68,4 +68,9 @@ public class UsuarioController {
         List<UsuarioDTO> usuarios = usuarioService.listarPorRol(tipoRol);
         return ResponseEntity.ok(usuarios);
     }
+    @GetMapping("/admi/con-suscripcion-activa")
+    public ResponseEntity<List<UsuarioDTO>> usuariosConSuscripcionActiva() {
+        List<UsuarioDTO> usuarios = usuarioService.listarUsuariosConSuscripcionActiva();
+        return ResponseEntity.ok(usuarios);
+    }
 }

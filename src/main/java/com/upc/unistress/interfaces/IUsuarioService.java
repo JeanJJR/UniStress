@@ -28,4 +28,7 @@ public interface IUsuarioService {
 
     // Listar usuarios por rol (ADMIN, ESTUDIANTE, PSICOLOGO)
     List<UsuarioDTO> listarPorRol(String tipoRol);
+
+    List<UsuarioDTO> listarUsuariosConSuscripcionActiva();
+
 }
