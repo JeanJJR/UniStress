@@ -21,4 +21,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT DISTINCT s.usuario FROM Suscripcion s WHERE s.estado = 'ACTIVA'")
     List<Usuario> findUsuariosConSuscripcionActiva();
 
+    @Query("SELECT u FROM Usuario u WHERE u.rol.tipoRol = 'PSICOLOGO'")
+    List<Usuario> findPsicologosDisponibles();
+
 }
