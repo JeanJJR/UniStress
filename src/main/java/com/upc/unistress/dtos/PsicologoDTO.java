@@ -5,19 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDTO {
-    private Long id;
+public class PsicologoDTO {
+    // Datos de Usuario
     private String nombre;
     private String apellidos;
     private String correo;
     private String contraseña;
     private String telefono;
-    private RolDTO rol;
-    private PerfilDTO perfil;
+
+    // Datos de Perfil
+    private String especialidad;
+    private String colegiatura;
+    private Integer añosExperiencia;
+
 }

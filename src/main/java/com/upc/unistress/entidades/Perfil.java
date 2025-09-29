@@ -46,15 +46,17 @@ public class Perfil implements Serializable {
     @Column(length = 50)
     private String colegiatura;
 
-    @Column(name = "anos_experiencia")
-    private Integer anosExperiencia;
+    @Column(name = "años_experiencia")
+    private Integer añosExperiencia;
 
-    @Column(name = "telefono_consulta", length = 20)
-    private String telefonoConsulta;
+    @Column(name="foto_url")
+    private String fotoUrl;
+
+
 
     public Perfil(Usuario usuario, String tipoPerfil, String universidad, String carrera, String ciclo,
                   String estadoAcademico, String especialidad, String colegiatura,
-                  Integer anosExperiencia, String telefonoConsulta) {
+                  Integer añosExperiencia, String fotoUrl) {
         this.usuario = usuario;
         this.tipoPerfil = tipoPerfil;
         this.universidad = universidad;
@@ -63,7 +65,7 @@ public class Perfil implements Serializable {
         this.estadoAcademico = estadoAcademico;
         this.especialidad = especialidad;
         this.colegiatura = colegiatura;
-        this.anosExperiencia = anosExperiencia;
-        this.telefonoConsulta = telefonoConsulta;
+        this.añosExperiencia = añosExperiencia;
+        this.fotoUrl = fotoUrl;
     }
 }

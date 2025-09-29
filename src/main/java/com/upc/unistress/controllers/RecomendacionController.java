@@ -48,4 +48,9 @@ public class RecomendacionController {
     public ResponseEntity<List<RecomendacionDTO>> listarPorTipo(@PathVariable String tipo) {
         return ResponseEntity.ok(recomendacionService.listarPorTipo(tipo));
     }
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<RecomendacionDTO>> listarPorUsuario(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(recomendacionService.listarPorUsuario(usuarioId));
+    }
+
 }

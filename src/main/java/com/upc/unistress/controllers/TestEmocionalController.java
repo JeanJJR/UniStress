@@ -50,4 +50,11 @@ public class TestEmocionalController {
             @RequestParam LocalDate fin) {
         return ResponseEntity.ok(service.listarPorRangoFechas(inicio, fin));
     }
+    // pregutnas a resolver por parte del estudiante
+    @PostMapping("/resolver")
+    public ResponseEntity<TestEmocionalDTO> resolver(@RequestBody TestEmocionalDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.resolver(dto));
+    }
+
+
 }

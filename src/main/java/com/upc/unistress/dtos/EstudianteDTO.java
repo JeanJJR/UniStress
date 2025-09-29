@@ -5,19 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDTO {
-    private Long id;
+public class EstudianteDTO {
     private String nombre;
     private String apellidos;
     private String correo;
     private String contraseña;
     private String telefono;
-    private RolDTO rol;
-    private PerfilDTO perfil;
+
+    // Campos propios del perfil de estudiante
+    private String universidad;
+    private String carrera;
+    private String ciclo;
+    private String estadoAcademico;
 }
+

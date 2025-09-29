@@ -2,13 +2,9 @@ package com.upc.unistress.servicios;
 
 import com.upc.unistress.dtos.BancoPreguntaDTO;
 import com.upc.unistress.entidades.BancoPregunta;
-import com.upc.unistress.entidades.CategoriaPregunta;
-import com.upc.unistress.entidades.NivelPregunta;
 import com.upc.unistress.entidades.Usuario;
 import com.upc.unistress.interfaces.IBancoPreguntaService;
 import com.upc.unistress.repositorios.BancoPreguntaRepository;
-import com.upc.unistress.repositorios.CategoriaPreguntaRepository;
-import com.upc.unistress.repositorios.NivelPreguntaRepository;
 import com.upc.unistress.repositorios.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +18,7 @@ public class BancoPreguntaService implements IBancoPreguntaService {
     @Autowired
     private BancoPreguntaRepository repository;
 
-    @Autowired
-    private CategoriaPreguntaRepository categoriaRepository;
 
-    @Autowired
-    private NivelPreguntaRepository nivelRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -37,16 +29,7 @@ public class BancoPreguntaService implements IBancoPreguntaService {
     @Override
     public void insertar(BancoPreguntaDTO dto) {
         BancoPregunta pregunta = new BancoPregunta();
-
         pregunta.setEnunciado(dto.getEnunciado());
-
-        CategoriaPregunta categoria = categoriaRepository.findById(dto.getCategoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-        pregunta.setCategoria(categoria);
-
-        NivelPregunta nivel = nivelRepository.findById(dto.getNivelId())
-                .orElseThrow(() -> new RuntimeException("Nivel no encontrado"));
-        pregunta.setNivel(nivel);
 
         Usuario psicologo = usuarioRepository.findById(dto.getPsicologoId())
                 .orElseThrow(() -> new RuntimeException("Psicólogo no encontrado"));
@@ -54,6 +37,7 @@ public class BancoPreguntaService implements IBancoPreguntaService {
 
         repository.save(pregunta);
     }
+
 
     @Override
     public List<BancoPreguntaDTO> listar() {
@@ -75,21 +59,9 @@ public class BancoPreguntaService implements IBancoPreguntaService {
                 .orElseThrow(() -> new RuntimeException("Pregunta con ID " + id + " no encontrada"));
     }
 
-    @Override
-    public List<BancoPreguntaDTO> listarPorCategoria(Long categoriaId) {
-        return repository.findByCategoria_Id(categoriaId)
-                .stream()
-                .map(p -> modelMapper.map(p, BancoPreguntaDTO.class))
-                .toList();
-    }
 
-    @Override
-    public List<BancoPreguntaDTO> listarPorNivel(Long nivelId) {
-        return repository.findByNivel_Id(nivelId)
-                .stream()
-                .map(p -> modelMapper.map(p, BancoPreguntaDTO.class))
-                .toList();
-    }
+
+
 
     @Override
     public List<BancoPreguntaDTO> listarPorPsicologo(Long psicologoId) {

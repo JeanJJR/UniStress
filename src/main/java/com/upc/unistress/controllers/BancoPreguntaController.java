@@ -37,15 +37,6 @@ public class BancoPreguntaController {
         return ResponseEntity.ok(service.listId(id));
     }
 
-    @GetMapping("/categoria/{categoriaId}")
-    public ResponseEntity<List<BancoPreguntaDTO>> listarPorCategoria(@PathVariable Long categoriaId) {
-        return ResponseEntity.ok(service.listarPorCategoria(categoriaId));
-    }
-
-    @GetMapping("/nivel/{nivelId}")
-    public ResponseEntity<List<BancoPreguntaDTO>> listarPorNivel(@PathVariable Long nivelId) {
-        return ResponseEntity.ok(service.listarPorNivel(nivelId));
-    }
 
     @GetMapping("/psicologo/{psicologoId}")
     public ResponseEntity<List<BancoPreguntaDTO>> listarPorPsicologo(@PathVariable Long psicologoId) {

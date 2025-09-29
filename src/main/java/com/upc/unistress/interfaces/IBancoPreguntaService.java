@@ -8,7 +8,5 @@ public interface IBancoPreguntaService {
     List<BancoPreguntaDTO> listar();
     void eliminar(Long id);
     BancoPreguntaDTO listId(Long id);
-    List<BancoPreguntaDTO> listarPorCategoria(Long categoriaId);
-    List<BancoPreguntaDTO> listarPorNivel(Long nivelId);
     List<BancoPreguntaDTO> listarPorPsicologo(Long psicologoId);
 }

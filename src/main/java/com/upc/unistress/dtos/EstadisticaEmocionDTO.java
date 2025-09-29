@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NivelPreguntaDTO {
-    private Long id;
-    private String nombre;
+public class EstadisticaEmocionDTO {
+    private String emocion;
+    private Double promedioNivel;
 }

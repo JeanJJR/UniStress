@@ -6,6 +6,7 @@ import com.upc.unistress.entidades.RegistroEmocional;
 import com.upc.unistress.repositorios.RecomendacionRepository;
 import com.upc.unistress.repositorios.RegistroEmocionalRepository;
 import com.upc.unistress.interfaces.IRecomendacionService;
+import com.upc.unistress.repositorios.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class RecomendacionService implements IRecomendacionService {
 
     @Autowired
     private RegistroEmocionalRepository registroRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -62,4 +65,21 @@ public class RecomendacionService implements IRecomendacionService {
                 .map(r -> modelMapper.map(r, RecomendacionDTO.class))
                 .toList();
     }
+    @Override
+    public List<RecomendacionDTO> listarPorUsuario(Long usuarioId) {
+        return recomendacionRepository.findByRegistroEmocional_Usuario_Id(usuarioId)
+                .stream()
+                .map(r -> {
+                    RecomendacionDTO dto = new RecomendacionDTO();
+                    dto.setId(r.getId());
+                    dto.setMensaje(r.getMensaje());
+                    dto.setTipo(r.getTipo());
+                    dto.setRegistroEmocionalId(r.getRegistroEmocional().getId());
+                    dto.setUsuarioId(r.getRegistroEmocional().getUsuario().getId());
+                    return dto;
+                })
+                .toList();
+    }
+
+
 }
