@@ -49,7 +49,7 @@ public class SesionService implements ISesionService {
             throw new RuntimeException("El usuario con ID " + dto.getEstudianteId() + " no es un estudiante válido.");
         }
 
-        //Crear sesion si todo está OK
+        //Crear sesion si esta bien
         Sesion sesion = new Sesion();
         sesion.setPsicologo(psicologo);
         sesion.setEstudiante(estudiante);
