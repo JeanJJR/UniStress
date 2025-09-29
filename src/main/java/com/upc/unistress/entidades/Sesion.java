@@ -40,5 +40,8 @@ public class Sesion implements Serializable {
 
     @Column(length = 500)
     private String observaciones;
+
+    @Column(length = 500)
+    private String mensaje;
 }
 

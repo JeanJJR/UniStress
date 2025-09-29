@@ -4,10 +4,12 @@ import com.upc.unistress.dtos.PagoDTO;
 import com.upc.unistress.interfaces.IPagoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +41,22 @@ public class PagoController {
     @GetMapping("/suscripcion/{suscripcionId}")
     public ResponseEntity<List<PagoDTO>> listarPorSuscripcion(@PathVariable Long suscripcionId) {
         return ResponseEntity.ok(pagoService.listarPorSuscripcion(suscripcionId));
+    }
+    @GetMapping("/admi/por-usuario/{usuarioId}")
+    public ResponseEntity<List<PagoDTO>> listarPorUsuario(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(pagoService.listarPorUsuario(usuarioId));
+    }
+
+    @GetMapping("/admi/ultimo-mes")
+    public ResponseEntity<List<PagoDTO>> listarPagosUltimoMes(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        return ResponseEntity.ok(pagoService.listarPagosUltimoMes(fecha));
+    }
+
+    @GetMapping("/admi/total-ultimo-mes")
+    public ResponseEntity<Double> obtenerTotalRecaudadoUltimoMes(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        return ResponseEntity.ok(pagoService.obtenerTotalRecaudadoUltimoMes(fecha));
     }
 
     @PostMapping

@@ -26,10 +26,14 @@ public class RegistroEmocionalService implements IRegistroEmocionalService {
 
     @Override
     public void insertar(RegistroEmocionalDTO dto) {
-        RegistroEmocional registro = modelMapper.map(dto, RegistroEmocional.class);
+        RegistroEmocional registro = new RegistroEmocional();
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         registro.setUsuario(usuario);
+        registro.setEmocion(dto.getEmocion());
+        registro.setNivel(dto.getNivel());
+        registro.setDescripcion(dto.getDescripcion());
+        registro.setFechaRegistro(LocalDateTime.now());
         registroRepository.save(registro);
     }
 

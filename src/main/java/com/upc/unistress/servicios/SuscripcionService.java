@@ -1,4 +1,5 @@
 package com.upc.unistress.servicios;
+import com.upc.unistress.dtos.UsuarioDTO;
 import com.upc.unistress.interfaces.ISuscripcionService;
 import com.upc.unistress.dtos.SuscripcionDTO;
 import com.upc.unistress.entidades.Suscripcion;
@@ -9,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -76,4 +78,36 @@ public class SuscripcionService implements ISuscripcionService {
                 })
                 .toList();
     }
+    @Override
+    public List<SuscripcionDTO> listarPorEstado(String estado) {
+        return suscripcionRepository.findByEstado(estado)
+                .stream()
+                .map(s -> {
+                    SuscripcionDTO dto = modelMapper.map(s, SuscripcionDTO.class);
+                    dto.setUsuarioId(s.getUsuario().getId());
+                    return dto;
+                })
+                .toList();
+    }
+
+    @Override
+    public List<SuscripcionDTO> listarActivasUltimoMes(LocalDate fecha) {
+        return suscripcionRepository.findSuscripcionesActivasUltimoMes(fecha)
+                .stream()
+                .map(s -> {
+                    SuscripcionDTO dto = modelMapper.map(s, SuscripcionDTO.class);
+                    dto.setUsuarioId(s.getUsuario().getId());
+                    return dto;
+                })
+                .toList();
+    }
+
+    @Override
+    public List<UsuarioDTO> listarUsuariosPremiumActivos() {
+        return suscripcionRepository.findUsuariosPremiumActivos()
+                .stream()
+                .map(u -> modelMapper.map(u, UsuarioDTO.class))
+                .toList();
+    }
+
 }

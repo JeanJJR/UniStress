@@ -1,10 +1,8 @@
 package com.upc.unistress.controllers;
 
 import com.upc.unistress.dtos.UsuarioDTO;
-import com.upc.unistress.entidades.Usuario;
 import com.upc.unistress.interfaces.IUsuarioService;
 import org.modelmapper.ModelMapper;
-import org.springdoc.core.utils.PropertyResolverUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +64,11 @@ public class UsuarioController {
     @GetMapping("/por-rol")
     public ResponseEntity<List<UsuarioDTO>> listarPorRol(@RequestParam String tipoRol) {
         List<UsuarioDTO> usuarios = usuarioService.listarPorRol(tipoRol);
+        return ResponseEntity.ok(usuarios);
+    }
+    @GetMapping("/admi/con-suscripcion-activa")
+    public ResponseEntity<List<UsuarioDTO>> usuariosConSuscripcionActiva() {
+        List<UsuarioDTO> usuarios = usuarioService.listarUsuariosConSuscripcionActiva();
         return ResponseEntity.ok(usuarios);
     }
 }
