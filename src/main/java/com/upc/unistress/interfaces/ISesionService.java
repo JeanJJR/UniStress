@@ -7,18 +7,16 @@ import java.util.List;
 
 public interface ISesionService {
 
-    // Crear nueva sesión (incluye crear notificación para el psicólogo)
     void crearSesion(SesionDTO dto);
 
-    //Editar sesion
-    public SesionDTO editar (SesionDTO sesionDTO);
-
-    // Listar todas las sesiones
     List<SesionDTO> listar();
 
-    // Cancelar sesión
+    List<SesionDTO> listarPorEstudianteYRango(Long estudianteId, LocalDate fechaInicio, LocalDate fechaFin);
+
+    List<SesionDTO> listarHistorialPorEstudiante(Long estudianteId);
+
+    void editarSesion(Long id, SesionDTO dto);
+
     void eliminar(Long id);
 
-    // Listar sesiones entre fechas
-    List<SesionDTO> listarPorFechas(LocalDate fechaInicial, LocalDate fechaFinal);
 }
