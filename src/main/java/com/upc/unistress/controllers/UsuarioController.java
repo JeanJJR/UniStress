@@ -1,5 +1,7 @@
 package com.upc.unistress.controllers;
 
+import com.upc.unistress.dtos.EstudianteDTO;
+import com.upc.unistress.dtos.PsicologoDTO;
 import com.upc.unistress.dtos.UsuarioDTO;
 import com.upc.unistress.interfaces.IUsuarioService;
 import org.modelmapper.ModelMapper;
@@ -21,7 +23,7 @@ public class UsuarioController {
 
     @Autowired
     private ModelMapper modelMapper;
-
+// AMBOS USUARIOS
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> listar() {
         List<UsuarioDTO> usuarios = usuarioService.list()
@@ -71,4 +73,33 @@ public class UsuarioController {
         List<UsuarioDTO> usuarios = usuarioService.listarUsuariosConSuscripcionActiva();
         return ResponseEntity.ok(usuarios);
     }
+
+    // registrar estudiante
+    @PostMapping("/estudiante")
+    public ResponseEntity<String> registrarEstudiante(@RequestBody EstudianteDTO dto) {
+        usuarioService.registrarEstudiante(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Estudiante registrado correctamente");
+    }
+
+    // registrar psicologo
+    @PostMapping("/psicologo")
+    public ResponseEntity<String> registrarPsicologo(@RequestBody PsicologoDTO dto) {
+        usuarioService.registrarPsicologo(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Psicologo registrado correctamente");
+    }
+
+    // psicologos disponibles
+    // Nuevo endpoint para listar psicólogos disponibles
+    @GetMapping("/psicologos")
+    public ResponseEntity<List<UsuarioDTO>> listarPsicologos() {
+        return ResponseEntity.ok(usuarioService.listarPsicologosDisponibles());
+    }
+
+    // Listar estudiantes disponibles
+    @GetMapping("/estudiantes")
+    public ResponseEntity<List<UsuarioDTO>> listarEstudiantes() {
+        return ResponseEntity.ok(usuarioService.listarPorRol("ESTUDIANTE"));
+    }
+
+
 }
