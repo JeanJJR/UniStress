@@ -29,10 +29,10 @@ public class Usuario implements Serializable {
     @Column(nullable = false, unique = true, length = 80)
     private String correo;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String contraseña;
 
-    @Column(length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String telefono;
 
     @ManyToOne
