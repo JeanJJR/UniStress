@@ -9,4 +9,5 @@ import lombok.*;
 public class EstadisticaEmocionDTO {
     private String emocion;
     private Double promedioNivel;
+    
 }
