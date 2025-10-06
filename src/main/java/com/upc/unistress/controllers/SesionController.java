@@ -32,7 +32,7 @@ public class SesionController {
     }
 
     // 3. Listar proximas sesiones de un estudiante en un rango de fechas
-    @GetMapping("/estudiante/{id}")
+    @GetMapping("/estudiante/Start&EndDate{id}")
     public ResponseEntity<List<SesionDTO>> listarPorEstudianteYRango(
             @PathVariable Long id,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
@@ -55,7 +55,7 @@ public class SesionController {
     }
 
     // 6. Cancelar sesión
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Long id) {
         sesionService.eliminar(id);
         return ResponseEntity.ok("Sesión eliminada correctamente");

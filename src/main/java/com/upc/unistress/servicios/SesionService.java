@@ -79,11 +79,11 @@ public class SesionService implements ISesionService {
                 .toList();
     }
 
+
     @Override
     public List<SesionDTO> listarPorEstudianteYRango(Long estudianteId, LocalDate fechaInicio, LocalDate fechaFin) {
-        return sesionRepository.findByEstudiante_Id(estudianteId)
+        return sesionRepository.findByEstudiante_IdAndFechaBetween(estudianteId, fechaInicio, fechaFin)
                 .stream()
-                .filter(s -> !s.getFecha().isBefore(fechaInicio) && !s.getFecha().isAfter(fechaFin))
                 .map(this::convertirADTO)
                 .toList();
     }
