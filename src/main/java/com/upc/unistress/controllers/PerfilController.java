@@ -75,7 +75,7 @@ public class PerfilController {
         return ResponseEntity.ok("Foto de perfil actualizada correctamente");
     }
     ///  subir foto reales eso ya lo vere si lo aplico o no en el fronted
-    @PutMapping("/{id}/foto")
+    @PutMapping("/photoProfile/{id}")
     public ResponseEntity<String> actualizarFoto(
             @PathVariable Long id,
             @RequestParam("archivo") MultipartFile archivo) {
@@ -90,7 +90,7 @@ public class PerfilController {
         return ResponseEntity.ok(perfil);
     }
      // actualziar perfil
-    @PutMapping("/perfilusuario/{id}")
+    @PutMapping("/perfilusuario/update/{id}")
     public ResponseEntity<String> actualizarPerfil(
             @PathVariable int id,
             @RequestBody PerfilDetalleDTO dto) {
